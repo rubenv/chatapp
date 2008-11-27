@@ -1,0 +1,18 @@
+<html>
+<head>
+    <title>ZF & Doctrine example</title>
+</head>
+
+<body>
+<h1>Submit a message:</h1>
+<?=$this->form?>
+
+<hr />
+<h1>Messages posted:</h1>
+<!-- TODO: Show messages here -->
+<?php foreach ($this->messages as $message): ?>
+    <h2><?=$message->name?> (<?=$message->posted?>)</h2>
+    <?=$message->message?>
+<?php endforeach; ?>
+</body>
+</html>
