@@ -6,11 +6,19 @@ class IndexController extends Zend_Controller_Action
         $form = $this->getForm();
         $req = $this->getRequest();
         if ($req->getPost() && $form->isValid($req->getPost())) {
-            // TODO: Insert message into database
+            $message = new Message();
+            $message->name = $this->getRequest()->getPost('name');
+            $message->message = $this->getRequest()->getPost('message');
+            $message->posted = new Doctrine_Expression('NOW()');
+            $message->save();
         }
         $this->view->form = $form;
 
-        // TODO: Retrieve all messages.
+        $messages = Doctrine_Query::create()
+                    ->from('Message m')
+                    ->orderBy('m.posted DESC')
+                    ->execute();
+        $this->view->messages = $messages;
     }
 
     private function getForm()
